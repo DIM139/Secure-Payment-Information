@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Firmar Documento</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        form {
+            max-width: 500px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #444;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        input[type="file"] {
+            padding: 5px;
+        }
+        button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .error-message, .success-message {
+            text-align: center;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+        .error-message {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .success-message {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+    </style>
+</head>
+<body>
+    <h1>Firmar Documento</h1>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+        <div class="{{ 'success-message' if 'exito' in messages[0].lower() else 'error-message' }}">
+            {{ messages[0] }}
+        </div>
+    {% endif %}
+    {% endwith %}
+    <form action="/firmar_documento" method="POST" enctype="multipart/form-data">
+        <label for="private_key">Seleccionar Clave Privada (.pem):</label>
+        <input type="file" id="private_key" name="private_key" accept=".pem" required>
+
+        <label for="pdf_file">Seleccionar Documento PDF:</label>
+        <input type="file" id="pdf_file" name="pdf_file" accept="application/pdf" required>
+
+        <button type="submit">Firmar Documento</button>
+    </form>
+</body>
+</html>
